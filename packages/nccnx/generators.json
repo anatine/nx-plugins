@@ -1,0 +1,12 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "name": "nccnx",
+  "version": "0.0.1",
+  "generators": {
+    "nccnx": {
+      "factory": "./src/generators/nccnx/generator",
+      "schema": "./src/generators/nccnx/schema.json",
+      "description": "nccnx generator"
+    }
+  }
+}

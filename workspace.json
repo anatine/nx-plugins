@@ -1,0 +1,79 @@
+{
+  "version": 2,
+  "projects": {
+    "nccnx": {
+      "root": "packages/nccnx",
+      "sourceRoot": "packages/nccnx/src",
+      "projectType": "library",
+      "targets": {
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "packages/nccnx/**/*.ts"
+            ]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": [
+            "coverage/packages/nccnx"
+          ],
+          "options": {
+            "jestConfig": "packages/nccnx/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "build": {
+          "executor": "@nrwl/node:package",
+          "outputs": [
+            "{options.outputPath}"
+          ],
+          "options": {
+            "outputPath": "dist/packages/nccnx",
+            "tsConfig": "packages/nccnx/tsconfig.lib.json",
+            "packageJson": "packages/nccnx/package.json",
+            "main": "packages/nccnx/src/index.ts",
+            "assets": [
+              "packages/nccnx/*.md",
+              {
+                "input": "./packages/nccnx/src",
+                "glob": "**/*.!(ts)",
+                "output": "./src"
+              },
+              {
+                "input": "./packages/nccnx",
+                "glob": "generators.json",
+                "output": "."
+              },
+              {
+                "input": "./packages/nccnx",
+                "glob": "executors.json",
+                "output": "."
+              }
+            ]
+          }
+        }
+      }
+    },
+    "nccnx-e2e": {
+      "projectType": "application",
+      "root": "e2e/nccnx-e2e",
+      "sourceRoot": "e2e/nccnx-e2e/src",
+      "targets": {
+        "e2e": {
+          "executor": "@nrwl/nx-plugin:e2e",
+          "options": {
+            "target": "nccnx:build",
+            "npmPackageName": "@anatine/nccnx",
+            "pluginOutputPath": "dist/packages/nccnx",
+            "jestConfig": "e2e/nccnx-e2e/jest.config.js"
+          }
+        }
+      }
+    }
+  },
+  "cli": {
+    "defaultCollection": "@nrwl/workspace"
+  }
+}
